@@ -10,4 +10,6 @@ Q5="SELECT COUNT(mid) FROM Cast INNER JOIN Actor on id=pid WHERE fname='Jon' AND
 
 Q6="SELECT name FROM Movie WHERE (name LIKE 'Young Latin Girls%') AND (year BETWEEN 2003 AND 2006);"
 
+Q7="SELECT DISTINCT fname,lname FROM Director INNER JOIN MovieDirector on Director.id=did INNER JOIN Movie on Movie.id=mid WHERE name LIKE 'Star Trek%';"
+
 Q10="SELECT DISTINCT(gender),COUNT(gender) FROM Actor GROUP BY gender ORDER BY gender ASC;"
