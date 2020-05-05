@@ -13,3 +13,19 @@ Q6="SELECT name FROM Movie WHERE (name LIKE 'Young Latin Girls%') AND (year BETW
 Q7="SELECT DISTINCT fname,lname FROM Director INNER JOIN MovieDirector on Director.id=did INNER JOIN Movie on Movie.id=mid WHERE name LIKE 'Star Trek%';"
 
 Q10="SELECT DISTINCT(gender),COUNT(gender) FROM Actor GROUP BY gender ORDER BY gender ASC;"
+
+
+Querys
+
+8.Find all movies for which Jackie Chan is both director and actor, Your query results should be in ascending order of name of the movie [5 points]
+
+9.List fname and lname of directors who directed at least 4 movies which released in 2001. Your query should return results in the following order [5 points]
+
+11.Write a query to get movie pairs in which both the movies are released in the same year and have same rating. Your query should result in 100 
+entries and sorted in ascending order of first movie name. [10 points]
+
+12.Rank of an actor for a given year is the average of ranks of all the movies he/she is casted in and released in that year. Your query should result fname,
+year and the rank of the actors. Your query should result in only 100 entries when ordered as following [10 points]
+
+13.Find the top Actor - Directors pair. The score for an Actor - Director pair is the average of ranks of movies which the director has directed and which 
+the actor has acted. Consider only Actor - Director pair if they have worked together for at least 5 movies. [10 points]
