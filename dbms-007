@@ -52,4 +52,6 @@ Q6="SELECT name FROM Movie WHERE (name LIKE 'Young Latin Girls%') AND (year BETW
 
 Q7="SELECT DISTINCT fname,lname FROM Director INNER JOIN MovieDirector on Director.id=did INNER JOIN Movie on Movie.id=mid WHERE name LIKE 'Star Trek%';"
 
+Q8="SELECT * FROM Movie JOIN Cast on Movie.id=mid JOIN Actor on Actor.id = pid INNER JOIN Director WHERE (Actor.fname = 'Jackie (I)' AND Director.fname = 'Jackie (I)') AND (Actor.lname = 'Chan' AND Director.lname = 'Chan') ORDER BY name ASC;"
+
 Q10="SELECT DISTINCT(gender),COUNT(gender) FROM Actor GROUP BY gender ORDER BY gender ASC;"
