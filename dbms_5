@@ -1,0 +1,23 @@
+Querys :
+
+1. Calculate the number of movies(no_of_movies), each actor(actor_id) has acted.
+
+2. Calculate the number of movies released in each year, results should be in the ascending order of year.
+
+3. Calculate the average rank of movies(avg_rank) for each year, return year and avg_rank for years in which atleast 10 movies are released. Results should be in the descending order of year.
+
+4. Calculate the maximum rank of movies(max_rank) for each year, return year and max_rank. Results should be in the ascending order of year.
+
+5. Calculate the number of movies whose name starts with "a" and have the same rank, return rank, and the number of movies for that rank.
+
+Solutions :
+
+Q1="SELECT pid,COUNT(mid) FROM Cast GROUP BY pid;"
+
+Q2="SELECT year,COUNT(id) FROM Movie GROUP BY year;"
+
+Q3="SELECT year,AVG(rank) FROM Movie GROUP BY year HAVING COUNT(id)>=10 ORDER BY year DESC;"
+
+Q4="SELECT year,MAX(rank) FROM Movie GROUP BY year;"
+
+Q5="SELECT rank,COUNT(id) AS no_of_movies FROM Movie WHERE name LIKE 'a%' GROUP BY rank;"
