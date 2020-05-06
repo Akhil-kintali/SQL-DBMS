@@ -24,7 +24,7 @@ Schema for the tables that are to be used for following queries
  );
 
 
-Querys :
+Queries :
 
 1. Get top 10 movies when sorted in descending order of rank
 
