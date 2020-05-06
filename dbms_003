@@ -1,0 +1,27 @@
+Querys :
+
+1. Get the total number of movies that are released in year 1991
+
+2. Get the least rank for a movies
+
+3. Get the maximum rank for movies that are released in year 2000
+
+4. Get the average ranking for movies that are released in year 2000
+
+5. Find the total number of unique years in the imdb database given to you.
+
+6. Find the time period that this database covers. (start year, end year)
+
+Solutions :
+
+Q1="SELECT COUNT(name) FROM Movie WHERE year==1991;"
+
+Q2="SELECT MIN(rank) FROM Movie;"
+
+Q3="SELECT MAX(rank) FROM Movie WHERE year==2000;"
+
+Q4="SELECT AVG(rank) FROM Movie WHERE year==2000;"
+
+Q5="SELECT COUNT(DISTINCT year) FROM Movie;"
+
+Q6="SELECT MIN(year),MAX(year) FROM Movie;"
