@@ -1,0 +1,83 @@
+Queries :
+
+1. Find all the players in the database who acted as captain for at-least one match and didn't make at least one goal.
+
+2. Find the number of games played by each team.
+
+3. Find the average goal score of each team. The average goal score for a team is the total number of goals divided by the total number of members in the team.
+
+4. For each captain find the number of matches he/she has been captain to that match. The result should have captain and no_of_times_captain columns as shown below.
+
+5. Find the number of players(no_players) who are captain and also awarded the player of the match for the same match.
+
+6. Find the distinct player ids who are captain for atleast one match and didn't get the player of the match title for even a single match.
+
+7. Find the number of matches played in each month. Your query should return Month and no_of_matches in the descending order of no_of_matches.
+
+8. Find the jersey number and the number of captains use it. Your query should return jersey_no and no_captains in the descending order of no_captains and jersey_no.
+
+9. Find the average of the audience for each player. In the descending order of avg_audience and player_id.
+
+10. Calculate the average age of players for each team.
+
+11. Calculate the average age of all the captains in the database.
+
+12. Find the month and the number of players born in that month in the descending order of no_of_players and month.
+
+13. Find the captain id and the number of matches he/she has won(no_of_wins). Your Query should return captain and no_of_wins in the descending order of no_of_wins.
+
+Solutions :
+
+Q1=SELECT Player.* FROM Player INNER JOIN MatchCaptain on 
+MatchCaptain.captain=Player.player_id AND MatchCaptain.team_id=Player.team_id WHERE 
+player_id NOT IN (SELECT player_id FROM GoalDetails);
+
+                                          (or)
+
+Q1='''SELECT Player.* FROM Player INNER JOIN MatchCaptain on 
+Player.team_id=MatchCaptain.team_id LEFT JOIN GoalDetails on 
+Player.player_id=GoalDetails.player_id WHERE Player.player_id=MatchCaptain.captain
+AND GoalDetails.player_id is null;'''
+
+Q2="SELECT team_id,COUNT(match_no) FROM MatchTeamDetails GROUP BY team_id;"
+
+Q3='''SELECT team_id,COUNT(goal_id)/23.0 FROM GoalDetails GROUP BY team_id;'''
+
+Q4='''SELECT captain,COUNT(captain) FROM MatchCaptain INNER JOIN Match on 
+MatchCaptain.match_no=Match.match_no GROUP BY captain;'''
+
+Q5='''SELECT COUNT(DISTINCT(player_id)) FROM Player INNER JOIN MatchCaptain on
+player_id=MatchCaptain.captain INNER JOIN Match on 
+MatchCaptain.match_no=Match.match_no WHERE Player.player_id=Match.player_of_match;'''
+
+Q6=SELECT DISTINCT(captain) FROM MatchCaptain WHERE NOT EXISTS(SELECT 
+player_of_match FROM Match INNER JOIN Player on Match.player_of_match=Player.player_id
+WHERE Player.player_id=MatchCaptain.captain);
+               
+                                         (or)
+               
+Q6='''SELECT DISTINCT(captain) FROM MatchCaptain WHERE captain NOT IN (SELECT
+player_of_match FROM Match);'''
+
+Q7='''SELECT strftime("%m",play_date) as month,COUNT(match_no) as no_of_matches FROM
+Match GROUP BY month ORDER BY no_of_matches DESC;'''
+
+Q8='''SELECT jersey_no,COUNT(captain) as no_captains FROM Player INNER JOIN 
+MatchCaptain on Player.player_id=MatchCaptain.captain GROUP BY jersey_no ORDER BY 
+no_captains DESC,jersey_no DESC;'''
+
+Q9='''SELECT player_id,AVG(audience) as avg_audience FROM Player INNER JOIN 
+MatchCaptain on Player.team_id=MatchCaptain.team_id INNER JOIN Match on 
+Match.match_no=MatchCaptain.match_no GROUP BY Player.player_id ORDER BY avg_audience
+DESC,Player.player_id DESC;'''
+
+Q10='''SELECT Team.team_id,AVG(age) FROM Player INNER JOIN Team on 
+Player.team_id=Team.team_id GROUP BY Team.team_id;'''
+
+Q11='''SELECT AVG(age) FROM Player INNER JOIN MatchCaptain on 
+MatchCaptain.captain=Player.player_id;'''
+
+Q12='''SELECT strftime("%m",date_of_birth) as month,COUNT(player_id) as no_of_players
+FROM Player GROUP BY month ORDER BY no_of_players DESC,month DESC;'''
+
+Q13='''SELECT'''   
