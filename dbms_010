@@ -80,4 +80,9 @@ MatchCaptain.captain=Player.player_id;'''
 Q12='''SELECT strftime("%m",date_of_birth) as month,COUNT(player_id) as no_of_players
 FROM Player GROUP BY month ORDER BY no_of_players DESC,month DESC;'''
 
-Q13='''SELECT'''   
+Q13='''SELECT captain,COUNT(win_lose) as no_of_wins FROM 
+MatchCaptain INNER JOIN MatchTeamDetails on 
+MatchCaptain.match_no=MatchTeamDetails.match_no AND
+MatchCaptain.team_id=MatchTeamDetails.team_id WHERE win_lose="W" 
+GROUP BY captain ORDER BY no_of_wins DESC;'''
+ 
