@@ -1,0 +1,44 @@
+A Database is an organized collection of data.
+
+There are many types of databases with organizing the data in a different way to solve different problems.
+
+Relational Database
+Graph Database
+Document Database
+Key-Value Database
+and many more ...
+
+# DBMS
+Softwares are used to ease the access, create and updation of data in the database. These softwares are called Database Management Systems(DBMS)
+
+# Relational Databases
+In Relational database, data is organized in one or more tables. A table in relational database looks as below
+
+Relational Table
+
+# Table
+# Row
+A single row in a table is called a tuple or record
+
+A row in a table represents a set of related data i.e In our example student id(SID), name(SName), age(SAge), class(SClass) & section(SSection) are different information related to a student.
+
+# Attribute:
+Each row in table can be broken down into several smaller parts of data known as attributes In our example, the table consists of four attributes: SID, SName, SAge, SClass, SSection
+
+# Primary Key
+A primary key is a column(s) which uniquely identifies a row
+
+# Structured Query Language(SQL)
+Structured Query Language(SQL) is a database query language used to perform operations on data in Relational DBMS.
+
+A request to RDBMS is generally referred as Query.
+
+To query a Relational Database Management System inorder to retrieve, update, delete or create new data developers use SQL.
+
+In the next tutorials you will learn more on how to query RDBMS using SQL.
+
+Sqlite3 is a RDBMS, most commonly used in learning and development environments.
+
+We will be using sqlite3 for all our learning purposes.
+
+#
