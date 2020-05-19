@@ -1,0 +1,86 @@
+Actor (  
+	 id integer PRIMARY KEY,
+	 fname varchar(250),  
+	 lname varchar(250), 
+	 gender varchar(10) 
+ );
+
+ Movie(  
+	 id integer PRIMARY KEY, 
+	 name varchar(250), 
+	 year integer, 
+	 rank integer
+ );
+	
+ Director(  
+	 id integer PRIMARY KEY, 
+	 fname varchar(250), 
+	 lname varchar(250)
+ );
+
+Cast(
+        pid integer,
+        mid integer,
+        role varchar(200)
+    );
+
+MovieDirector(
+        did integer,
+        mid integer
+    );
+
+Queries :
+
+1. Get list of all the actors who casted in all the movies having name starting with 'Annie'.
+
+2. Get the top ranked movies directed by Biff Mailbu (i.e fname = "Biff" and lname = "Malibu") and released in the years (1999, 1994, 2003) in the descending order of rank and ascending order of year.
+
+3. For each year find the no_of_movies released in that ye ar. Select year for which average rank of all the movies in that year is greater than the average rank for all movies in the database. Your result should be in the ascending order of year.
+
+4. Get the 10 movies released in the year 2001 whose rank is less than the average rank of all the movies released in that year, when ordered in the descending order of rank.
+
+5. Get 100 movies with male and female actors cast count when sorted in ascending order of id.
+
+6. Get 100 distinct actor ids who are casted in the same movie for more than one role (different role name) when sorted in ascending order of actor id.
+
+7. Find the number of directors with same first name (fname) in the database (consider fname if more than one director have the it).
+
+8. Get all the directors who directed only movies having unique cast more than 100
+
+Solutions :
+
+Q1='''SELECT `Actor`.id,`Actor`.fname,`Actor`.lname,`Actor`.gender FROM Actor INNER
+JOIN Cast on `Actor`.id=`Cast`.pid INNER JOIN Movie on `Movie`.id=`Cast`.mid WHERE 
+Movie.name LIKE 'Annie%';'''
+
+Q2='''SELECT `Movie`.id,`Movie`.name,`Movie`.rank,`Movie`.year FROM Movie INNER JOIN 
+MovieDirector on `Movie`.id=`MovieDirector`.mid INNER JOIN Director on `Director`.id=
+`MovieDirector`.did WHERE `Director`.fname='Biff' AND `Director`.lname='Malibu' AND 
+year IN (1999, 1994, 2003) ORDER BY `Movie`.rank DESC,`Movie`.year ASC;'''
+
+Q3='''SELECT `Movie`.year,COUNT(`Movie`.id) as no_of_movies FROM Movie GROUP
+BY `Movie`.year HAVING AVG(rank)>(SELECT AVG(rank) FROM Movie) ORDER BY year ASC;'''
+
+Q4='''SELECT `Movie`.id,`Movie`.name,`Movie`.year,`Movie`.rank FROM Movie WHERE 
+year=2001 AND `Movie`.rank<(SELECT AVG(rank) FROM Movie WHERE year=2001) ORDER BY rank
+DESC LIMIT 10;'''
+
+'''Q5=SELECT `Movie`.id,(SELECT COUNT(`Actor`.gender) FROM Actor INNER JOIN Cast on 
+`Actor`.id=`Cast`.pid AND `Movie`.id=`Cast`.mid WHERE gender="F"),(SELECT COUNT
+(`Actor`.gender) FROM Actor INNER JOIN Cast on `Actor`.id=`Cast`.pid AND 
+`Movie`.id=`Cast`.mid WHERE gender="M") FROM Movie ORDER BY `Movie`.id ASC LIMIT 100;'''
+
+Q6='''SELECT DISTINCT(`Actor`.id) FROM Actor INNER JOIN Cast on `Actor`.id=`Cast`.pid 
+INNER JOIN Movie on `Movie`.id=`Cast`.mid GROUP BY `Actor`.id,`Movie`.id HAVING COUNT
+(DISTINCT(`Cast`.role))>1 ORDER BY `Actor`.id ASC LIMIT 100;'''
+
+Q7='''SELECT `Director`.fname,COUNT(fname)FROM Director GROUP BY fname HAVING COUNT
+(fname)>1;'''
+
+Q8='''SELECT id,fname,lname FROM Director WHERE EXISTS(SELECT * FROM Cast INNER JOIN
+MovieDirector ON `Cast`.mid=`MovieDirector`.mid WHERE 
+`Director`.id=`MovieDirector`.did GROUP BY `MovieDirector`.did,`Cast`.mid HAVING 
+COUNT(DISTINCT `Cast`.pid)>=100) AND NOT EXISTS (SELECT * FROM Cast INNER JOIN 
+MovieDirector ON `Cast`.mid=`MovieDirector`.mid WHERE 
+`Director`.id=`MovieDirector`.did GROUP BY `MovieDirector`.did,`Cast`.mid HAVING 
+COUNT(DISTINCT `Cast`.pid)<100);'''
